@@ -1,0 +1,35 @@
+{
+	"id": "hx-npm-registry-switch",
+	"name": "hx-npm-registry-switch",
+	"description": "快速切换npm源（基于nrm）",
+	"displayName": "npm源切换工具",
+	"version": "0.0.0",
+	"publisher": "NoahYoung",
+	"engines": {
+		"HBuilderX": "^2.7.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"main": "./extension",
+	"activationEvents": [
+		"*"
+	],
+	"contributes": {
+		"icons": {
+			"npm": {
+				"description": "",
+				"default": {
+					"fontPath": "./fonts/iconfont.ttf",
+					"fontCharacter": "\\e73e"
+				}
+			}
+		}
+	},
+	"extensionDependencies": [
+		"plugin-manager"
+	],
+	"dependencies": {
+		"nrm": "^1.5.0"
+	}
+}

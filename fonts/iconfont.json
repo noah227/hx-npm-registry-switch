@@ -1,0 +1,16 @@
+{
+  "id": "4767404",
+  "name": "hx-npm-registry-switch",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "27393847",
+      "name": "npm",
+      "font_class": "npm",
+      "unicode": "e73e",
+      "unicode_decimal": 59198
+    }
+  ]
+}
