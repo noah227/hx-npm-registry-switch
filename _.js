@@ -7,14 +7,29 @@ const {
 const {NPMRC} = require("nrm/constants")
 const hx = require("hbuilderx")
 const fs = require("fs")
+const {execSync} = require("child_process")
 
 async function getRegistryName() {
-	const registry = await getCurrentRegistry()
+    // 这是一个网络地址（实际的源）
+	let registry = await getCurrentRegistry()
+    // 如果.npmrc不存在，那么nrm获取registry返回为空
+    // 此时，尝试以传统模式获取npm配置的源
+    if(!registry) {
+        console.log("没有获取到registry，尝试以传统配置模式获取")
+        registry = getRegistryNameClassic()
+        if(registry) console.log(`传统配置模式获取成功：${registry}`)
+    }
 	const registries = await getRegistries()
 	const registryMatch = Object.entries(registries).find(([k, data]) => {
 		return data.registry === registry
 	})
 	return registryMatch ? registryMatch[0] : null
+}
+
+// 传统方式获取注册源
+function getRegistryNameClassic(){
+    const registry = execSync("npm config --global get registry").toString("utf8")
+    return registry.replace(/\n$/, "")
 }
 
 const SHOW_COMMAND = "ny.show-nrm"
