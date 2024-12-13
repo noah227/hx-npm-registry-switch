@@ -12,6 +12,9 @@
 		"Other"
 	],
 	"main": "./extension",
+	"scripts": {
+		"pack": "node hx-pack.js"
+	},
 	"activationEvents": [
 		"*"
 	],
@@ -31,5 +34,8 @@
 	],
 	"dependencies": {
 		"nrm": "^1.5.0"
+	},
+	"devDependencies": {
+		"cozip": "^0.1.1"
 	}
 }
