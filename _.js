@@ -23,6 +23,11 @@ async function getRegistryName() {
         registry = getRegistryNameClassic()
         if (registry) console.log(`传统配置模式获取成功：${registry}`)
     }
+    /**
+     * @type {{[p: string]: {home?: string, registry: string}}}
+     * @example
+     * {npm: {home: "", registry: ""}, ...}
+     */
     const registries = await getRegistries()
     const registryMatch = Object.entries(registries).find(([k, data]) => {
         return data.registry === registry
@@ -48,7 +53,7 @@ module.exports = {
         barItem.command = SHOW_COMMAND
         barItem.hide()
         barItem.show()
-        console.log(Object.keys(barItem))
+        // console.log(Object.keys(barItem))
         this.barItem = barItem
         return barItem
     },
@@ -63,7 +68,7 @@ module.exports = {
         context.subscriptions.push(
             hx.commands.registerCommand(SHOW_COMMAND, async () => {
                 if (!this.barItem) await this.initBarItem()
-                console.log("EXECUTE")
+                // console.log("EXECUTE")
                 const registries = await getRegistries()
                 // 怎么调用内置的contextmenu创建，我母鸡啊
                 hx.window.showQuickPick(Object.keys(registries).map(k => ({
@@ -73,7 +78,7 @@ module.exports = {
                     const {
                         label: registry
                     } = data
-                    console.log("选择了：", registry)
+                    // console.log("选择了：", registry)
                     this.updateRegistries(registries, registry)
                     this.updateBarItem(registry)
                 })
@@ -97,7 +102,7 @@ module.exports = {
 
     },
     async init(context) {
-        console.log(await getRegistryName())
+        // console.log(await getRegistryName())
         await this.initBarItem()
         await this.registerCommand(context)
         this.startWatch()
