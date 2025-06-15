@@ -1,12 +1,4 @@
-const {
-    getRegistries,
-    getCurrentRegistry,
-    readFile,
-    writeFile
-} = require("nrm/helpers")
-const {
-    NPMRC
-} = require("nrm/constants")
+const _nrm = require("./_nrm")
 const hx = require("hbuilderx")
 const fs = require("fs")
 const {
@@ -15,7 +7,7 @@ const {
 
 async function getRegistryName() {
     // 这是一个网络地址（实际的源）
-    let registry = await getCurrentRegistry()
+    let registry = await _nrm.getCurrentRegistry()
     // 如果.npmrc不存在，那么nrm获取registry返回为空
     // 此时，尝试以传统模式获取npm配置的源
     if (!registry) {
@@ -28,7 +20,7 @@ async function getRegistryName() {
      * @example
      * {npm: {home: "", registry: ""}, ...}
      */
-    const registries = await getRegistries()
+    const registries = await _nrm.getRegistries()
     const registryMatch = Object.entries(registries).find(([k, data]) => {
         return data.registry === registry
     })
@@ -61,15 +53,15 @@ module.exports = {
         this.barItem.text = "$(npm):" + (registry || await getRegistryName())
     },
     async updateRegistries(registries, registry) {
-        const npmrc = await readFile(NPMRC)
-        await writeFile(NPMRC, Object.assign(npmrc, registries[registry]))
+        const npmrc = await _nrm.readFile(_nrm.NPMRC)
+        await _nrm.writeFile(_nrm.NPMRC, Object.assign(npmrc, registries[registry]))
     },
     async registerCommand(context) {
         context.subscriptions.push(
             hx.commands.registerCommand(SHOW_COMMAND, async () => {
                 if (!this.barItem) await this.initBarItem()
                 // console.log("EXECUTE")
-                const registries = await getRegistries()
+                const registries = await _nrm.getRegistries()
                 // 怎么调用内置的contextmenu创建，我母鸡啊
                 hx.window.showQuickPick(Object.keys(registries).map(k => ({
                     label: k,
@@ -89,7 +81,7 @@ module.exports = {
      * 监听外部变动同步（仅nrm全局模式）
      */
     startWatch() {
-        fs.watchFile(NPMRC, async (curr, prev) => {
+        fs.watchFile(_nrm.NPMRC, async (curr, prev) => {
             // 实际从npm配置取的
             const registry = await getRegistryName()
             if (registry !== this.barItem.text) this.updateBarItem()

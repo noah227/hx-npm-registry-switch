@@ -33,7 +33,7 @@
 		"plugin-manager"
 	],
 	"dependencies": {
-		"nrm": "^1.5.0"
+		"nrm": "^2.0.1"
 	},
 	"devDependencies": {
 		"cozip": "^0.1.1"
