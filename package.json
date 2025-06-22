@@ -3,7 +3,7 @@
 	"name": "hx-npm-registry-switch",
 	"description": "快速切换npm源（基于nrm）",
 	"displayName": "npm源切换工具",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"publisher": "NoahYoung",
 	"engines": {
 		"HBuilderX": "^2.7.0"
